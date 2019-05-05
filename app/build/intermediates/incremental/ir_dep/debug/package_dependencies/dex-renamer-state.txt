@@ -1,4 +1,0 @@
-#Sat May 04 17:34:26 CDT 2019
-base.0=/home/mike/Documents/GitHub/EasyTourAndroid/app/build/intermediates/transforms/dexMerger/debug/10
-path.0=classes.dex
-renamed.0=classes.dex
