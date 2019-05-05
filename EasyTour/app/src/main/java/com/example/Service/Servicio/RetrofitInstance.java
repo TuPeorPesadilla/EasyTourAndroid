@@ -8,7 +8,7 @@ public class RetrofitInstance {
     private static Retrofit instance;
 
     public static Retrofit getInstance(){
-        final String url = "";
+        final String url = "http://192.168.1.199:8080/WEB-INF/";
         if(instance == null){
             instance = new Retrofit
                     .Builder()

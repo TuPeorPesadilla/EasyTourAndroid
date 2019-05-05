@@ -1,5 +1,6 @@
 package com.example.easytour;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.TextInputEditText;
@@ -9,13 +10,14 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
 
+import com.example.Service.Servicio.KeyManager;
 import com.example.Service.Servicio.RetrofitInstance;
 import com.example.Service.Servicio.ServiceRetrofit;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.net.ssl.KeyManager;
+
 
 import ahmed.easyslider.EasySlider;
 import ahmed.easyslider.SliderItem;
@@ -77,11 +79,11 @@ public class MainActivity extends AppCompatActivity {
 
         }
 
-        if (TextUtils.isEmpty(password)) {
+       /* if (TextUtils.isEmpty(password)) {
             Toast.makeText(MainActivity.this, "No puedes dejar vacío el password", Toast.LENGTH_SHORT).show();
-        }
+        }*/
 
-        compositeDisposable.add(serviceRetrofit.loginUser(email, password)
+        compositeDisposable.add(serviceRetrofit.loginUser(email)//, password)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Consumer<String>(){
