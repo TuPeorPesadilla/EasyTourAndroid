@@ -1,0 +1,20 @@
+<resources>
+    <string name="app_name">EasyTour</string>
+    <string name="EasyTour">EASYTOUR</string>
+    <string name="PSW">Password</string>
+    <string name="NotificacionTurista">Aqui va la madre de las notificaciones :v</string>
+    <string name="title_activity_modificar">Modificar</string>
+    <string name="editarperfil">" "" "Editar Perfil</string>
+    <string name="notifications">" "" "Notificaciones</string>
+    <string name="title_notificaciones">Notificaciones</string>
+    <string name="title_home">Home</string>
+    <string name="et_nombre_hint">Nombre(s)</string>
+    <string name="et_apt_hint">Ap. paterno</string>
+    <string name="et_apm_hint">Ap. materno</string>
+    <string name="et_email_text">Email</string>
+    <string name="tv_confemail_text">Conf. email</string>
+    <string name="contrasena">Contraseña</string>
+    <string name="tv_confpass_text">Conf. pass</string>
+    <string name="b_edit">Editar</string>
+
+</resources>
