@@ -89,7 +89,8 @@ public class MainActivity extends AppCompatActivity {
                 .subscribe(new Consumer<String>(){
             @Override
             public void accept (String response)throws Exception {
-                switch (response) {
+                Toast.makeText(MainActivity.this, response, Toast.LENGTH_LONG).show();
+                /*switch (response) {
                     case "no-valid":
                         Toast.makeText(MainActivity.this, "Campos no validos", Toast.LENGTH_LONG).show();
                         break;
@@ -102,7 +103,7 @@ public class MainActivity extends AppCompatActivity {
                         Toast.makeText(MainActivity.this, "Tu password es invalida", Toast.LENGTH_LONG).show();
                         break;
 
-                }
+                }*/
 
                 KeyManager keyManager = new KeyManager(MainActivity.this);
                 keyManager.setKey(response);

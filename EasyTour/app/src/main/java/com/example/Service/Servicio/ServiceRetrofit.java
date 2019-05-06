@@ -11,10 +11,10 @@ import retrofit2.http.Query;
 
 public interface ServiceRetrofit {
 
-    @POST("buscarguia.jsp")
+    @POST("buscarguia")
     @FormUrlEncoded
     Observable<String> loginUser(@Field("email") String email);//, @Field("password") String password);
 
-    @GET("buscarguia.jsp")
+    @GET("buscarguia")
     Observable<String> getUserInformation(@Query("token") String token);
 }
