@@ -47,8 +47,6 @@ public class MainActivity extends AppCompatActivity {
 
         b_inicio = (Button) findViewById(R.id.b_inicio);
 
-
-
         /*EASY SLIDER*/
         //------------------------------------------------------------------------------------------
         easyslider = findViewById(R.id.id_slider);
@@ -78,15 +76,16 @@ public class MainActivity extends AppCompatActivity {
             Toast.makeText(MainActivity.this, "No puedes dejar vacío el email", Toast.LENGTH_LONG).show();
 
         }
-
        /* if (TextUtils.isEmpty(password)) {
             Toast.makeText(MainActivity.this, "No puedes dejar vacío el password", Toast.LENGTH_SHORT).show();
         }*/
+
 
         compositeDisposable.add(serviceRetrofit.loginUser(email)//, password)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Consumer<String>(){
+
             @Override
             public void accept (String response)throws Exception {
                 Toast.makeText(MainActivity.this, response, Toast.LENGTH_LONG).show();
@@ -104,16 +103,24 @@ public class MainActivity extends AppCompatActivity {
                         break;
 
                 }*/
-
                 KeyManager keyManager = new KeyManager(MainActivity.this);
                 keyManager.setKey(response);
 
-                //new Cliente();
                 Intent intent = new Intent(MainActivity.this, Modificar.class);
                 startActivity(intent);
                 finish();
             }
         }));
     }
+
+   /*
+    class mandarDatos (String email, String password){
+        SharePreferences sharePreferences = new SharePreferences();
+        String emailCuenta, passwordCuenta ;
+        emailCuenta = email.getText().toString();
+        passwordCuenta = password.getText().toString();
+       sharePreferences.obtenerDatos(emailCuenta, passwordCuenta);
+
+    }*/
 }
 
