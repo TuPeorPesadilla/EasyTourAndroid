@@ -6,7 +6,9 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".Modificar"
-    android:background="#E1E1E2">
+    android:background="#E1E1E2"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://schemas.android.com/apk/res/android ">
 
     <!--Cambiar a otra mejor ocion que no sea el Text View-->
 
@@ -27,11 +29,9 @@
             android:textStyle="italic"
             android:text="@string/editarperfil"
             android:textSize="35dp"
-            android:textColor="#FFFFFF"/>
+            android:textColor="#FFFFFF" />
 
     </RelativeLayout>
-
-
 
 
     <android.support.design.widget.BottomNavigationView
