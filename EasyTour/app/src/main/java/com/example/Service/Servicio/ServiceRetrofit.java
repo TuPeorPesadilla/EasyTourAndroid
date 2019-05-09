@@ -13,8 +13,12 @@ public interface ServiceRetrofit {
 
     @POST("buscarguia")
     @FormUrlEncoded
-    Observable<String> loginUser(@Field("email") String email);//, @Field("password") String password);
+    Observable<String> loginUser(@Field("email") String email, @Field("password") String password);
 
     @GET("buscarguia")
     Observable<String> getUserInformation(@Query("token") String token);
+
+    @POST("buscarguia")
+    Observable<String> editUser(@Field("email") String email, @Field("confEmail") String confEmail, @Field("password") String password,
+                                @Field("confPassword") String confPassword);
 }

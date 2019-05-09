@@ -15,18 +15,44 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 import org.w3c.dom.Text;
+import com.example.Service.Servicio.RetrofitInstance;
+import com.example.Service.Servicio.ServiceRetrofit;
+
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.disposables.CompositeDisposable;
+import io.reactivex.functions.Consumer;
+import io.reactivex.schedulers.Schedulers;
+import retrofit2.Retrofit;
 
 public class Modificar extends AppCompatActivity{
 
 
-    private EditText et_email, et_confemail, et_pass, et_confpass;
+    private EditText email, confEmail, password, confPassword;
     private TextView tv_nombre, tv_apt, tv_apm, tv_editar, tv_notificaciones;
     private Button b_edit;
+    ServiceRetrofit serviceRetrofit;
+    CompositeDisposable compositeDisposable = new CompositeDisposable();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_modificar);
+
+        email = (EditText) findViewById(R.id.et_email);
+        confEmail = (EditText) findViewById(R.id.et_confemail);
+        password = (EditText) findViewById(R.id.et_password);
+        confPassword = (EditText) findViewById(R.id.et_confpass);
+
+        Retrofit retrofitInstance = new RetrofitInstance().getInstance();
+        serviceRetrofit = retrofitInstance.create(ServiceRetrofit.class);
+
+        b_edit.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                editUser(email.getText().toString(), confEmail.getText().toString(), password.getText().toString(),
+                        confPassword.getText().toString());
+            }
+        });
 
         BottomNavigationView bottomNavigationView = (BottomNavigationView) findViewById(R.id.navigation);
         Menu menu = bottomNavigationView.getMenu();
@@ -50,4 +76,17 @@ public class Modificar extends AppCompatActivity{
 
     }
 
+    private void editUser(String email, String connfEmail, String password, String confPassword){
+        compositeDisposable.add(serviceRetrofit.loginUser(email, password)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Consumer<String>(){
+
+                    @Override
+                    public void accept(String s) throws Exception {
+
+                    }
+                }));
+
+}
 }

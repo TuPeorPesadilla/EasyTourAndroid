@@ -1,6 +1,5 @@
 package com.example.easytour;
 
-import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.TextInputEditText;
@@ -14,14 +13,13 @@ import com.example.Service.Servicio.KeyManager;
 import com.example.Service.Servicio.RetrofitInstance;
 import com.example.Service.Servicio.ServiceRetrofit;
 
+import org.json.JSONObject;
+
 import java.util.ArrayList;
 import java.util.List;
 
-
-
 import ahmed.easyslider.EasySlider;
 import ahmed.easyslider.SliderItem;
-import io.reactivex.Scheduler;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.CompositeDisposable;
 import io.reactivex.functions.Consumer;
@@ -71,17 +69,15 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
-    private void loginUser(String email, String password) {
+    private void loginUser(String email, final String password) {
+       final String in_email = email;
+       final String in_password = password;
         if (TextUtils.isEmpty(email)) {
             Toast.makeText(MainActivity.this, "No puedes dejar vacío el email", Toast.LENGTH_LONG).show();
 
         }
-       /* if (TextUtils.isEmpty(password)) {
-            Toast.makeText(MainActivity.this, "No puedes dejar vacío el password", Toast.LENGTH_SHORT).show();
-        }*/
 
-
-        compositeDisposable.add(serviceRetrofit.loginUser(email)//, password)
+        compositeDisposable.add(serviceRetrofit.loginUser(email, password)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Consumer<String>(){
@@ -89,38 +85,28 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void accept (String response)throws Exception {
                 Toast.makeText(MainActivity.this, response, Toast.LENGTH_LONG).show();
-                /*switch (response) {
-                    case "no-valid":
-                        Toast.makeText(MainActivity.this, "Campos no validos", Toast.LENGTH_LONG).show();
-                        break;
+                if(response == "false"){
+                    Toast.makeText(MainActivity.this, "Datos invalidos", Toast.LENGTH_SHORT).show();
+                }else{
 
-                    case "email":
-                        Toast.makeText(MainActivity.this, "No estas registrado", Toast.LENGTH_LONG).show();
-                        break;
+                    JSONObject usuario = new JSONObject(response);
+                    KeyManager keyManager = new KeyManager(MainActivity.this);
+                    keyManager.setKeys(usuario.getString("nombre"),
+                            usuario.getString("apellidoP"),
+                            usuario.getString("apellidoM"),
+                            in_email, password);
 
-                    case "password":
-                        Toast.makeText(MainActivity.this, "Tu password es invalida", Toast.LENGTH_LONG).show();
-                        break;
+                    Intent intent = new Intent(MainActivity.this, Modificar.class);
+                    startActivity(intent);
+                    finish();
+                }
 
-                }*/
-                KeyManager keyManager = new KeyManager(MainActivity.this);
-                keyManager.setKey(response);
-
-                Intent intent = new Intent(MainActivity.this, Modificar.class);
-                startActivity(intent);
-                finish();
             }
+
         }));
+
     }
 
-   /*
-    class mandarDatos (String email, String password){
-        SharePreferences sharePreferences = new SharePreferences();
-        String emailCuenta, passwordCuenta ;
-        emailCuenta = email.getText().toString();
-        passwordCuenta = password.getText().toString();
-       sharePreferences.obtenerDatos(emailCuenta, passwordCuenta);
-
-    }*/
 }
+
 
