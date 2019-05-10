@@ -76,14 +76,14 @@ public class Modificar extends AppCompatActivity{
 
     }
 
-    private void editUser(String email, String connfEmail, String password, String confPassword){
-        compositeDisposable.add(serviceRetrofit.loginUser(email, password)
+    private void editUser(String email, String confEmail, String password, String confPassword){
+        compositeDisposable.add(serviceRetrofit.editUser(email, confEmail, password, confPassword)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Consumer<String>(){
 
                     @Override
-                    public void accept(String s) throws Exception {
+                    public void accept(String responseEdit) throws Exception {
 
                     }
                 }));
