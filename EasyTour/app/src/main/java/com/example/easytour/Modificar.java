@@ -66,6 +66,7 @@ public class Modificar extends AppCompatActivity{
                             boolean hecho = jsonObject.getBoolean("hecho");
                             if (hecho){
                                 Toast.makeText(Modificar.this, "Cuenta modificada", Toast.LENGTH_SHORT).show();
+
                             }else{
                                 AlertDialog.Builder builder = new AlertDialog.Builder(Modificar.this);
                                 builder.setMessage("contraseña o correo incorrectos").setNegativeButton("reintentar", null)
