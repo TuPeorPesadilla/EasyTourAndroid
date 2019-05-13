@@ -14,6 +14,8 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
+
 import org.w3c.dom.Text;
 import com.example.Service.Servicio.RetrofitInstance;
 import com.example.Service.Servicio.ServiceRetrofit;
@@ -84,6 +86,12 @@ public class Modificar extends AppCompatActivity{
 
                     @Override
                     public void accept(String responseEdit) throws Exception {
+                        Toast.makeText(Modificar.this, responseEdit, Toast.LENGTH_LONG).show();
+                        if(responseEdit == "false"){
+                            Toast.makeText(Modificar.this, "Datos invalidos", Toast.LENGTH_SHORT).show();
+                        }else {
+                            Toast.makeText(Modificar.this, "Datos modificados", Toast.LENGTH_SHORT).show();
+                        }
 
                     }
                 }));
