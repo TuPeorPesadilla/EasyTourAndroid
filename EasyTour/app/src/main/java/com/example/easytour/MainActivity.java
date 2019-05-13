@@ -35,6 +35,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+
         email = (TextInputEditText) findViewById(R.id.tie_correo);
         password = (TextInputEditText) findViewById(R.id.tie_password);
 
@@ -75,6 +76,7 @@ public class MainActivity extends AppCompatActivity {
                                 intent.putExtra("nombre", nombre);
                                 intent.putExtra("correo", correo);
                                 intent.putExtra("contrasena", contrasena);
+                                startActivity(intent);
                             }else{
                                 AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
                                 builder.setMessage("contraseña o correo incorrectos").setNegativeButton("reintentar", null)
@@ -82,7 +84,7 @@ public class MainActivity extends AppCompatActivity {
                             }
 
                         }catch (JSONException e) {
-                            e.printStackTrace();
+                           e.printStackTrace();
                         }
                     }
                 };
