@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.constraint.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/container"
@@ -8,7 +9,7 @@
     tools:context=".Modificar"
     android:background="#E1E1E2"
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-    xsi:schemaLocation="http://schemas.android.com/apk/res/android ">
+    xsi:schemaLocation="http://schemas.android.com/apk/res/android  ">
 
     <!--Cambiar a otra mejor ocion que no sea el Text View-->
 

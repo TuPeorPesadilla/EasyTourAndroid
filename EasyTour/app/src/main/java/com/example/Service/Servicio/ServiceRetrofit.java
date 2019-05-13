@@ -11,7 +11,7 @@ import retrofit2.http.Query;
 
 public interface ServiceRetrofit {
 
-    @POST("buscarguia")
+    @POST("apiLogin")
     @FormUrlEncoded
     Observable<String> loginUser(@Field("email") String email, @Field("password") String password);
 
