@@ -3,36 +3,31 @@ package com.example.easytour;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.TextInputEditText;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
-import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
-import android.widget.Toast;
 
-import com.example.Service.Servicio.KeyManager;
-import com.example.Service.Servicio.RetrofitInstance;
-import com.example.Service.Servicio.ServiceRetrofit;
+//Clases de Volley
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.toolbox.Volley;
 
+import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.List;
 
+//Clases de easySlider
 import ahmed.easyslider.EasySlider;
 import ahmed.easyslider.SliderItem;
-import io.reactivex.android.schedulers.AndroidSchedulers;
-import io.reactivex.disposables.CompositeDisposable;
-import io.reactivex.functions.Consumer;
-import io.reactivex.schedulers.Schedulers;
-import retrofit2.Retrofit;
 
 public class MainActivity extends AppCompatActivity {
 
     EasySlider easyslider;
     Button b_inicio;
     TextInputEditText email, password;
-    CompositeDisposable compositeDisposable = new CompositeDisposable();
-    ServiceRetrofit serviceRetrofit;
 
 
     @Override
@@ -57,55 +52,50 @@ public class MainActivity extends AppCompatActivity {
         easyslider.setPages(easysliders);
         //------------------------------------------------------------------------------------------
 
-        Retrofit retrofitInstance = new RetrofitInstance().getInstance();
-        serviceRetrofit = retrofitInstance.create(ServiceRetrofit.class);
-
         b_inicio.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                loginUser(email.getText().toString(), password.getText().toString());
+                final String correo = email.getText().toString();
+                final String contra = password.getText().toString();
+
+                Response.Listener<String> responseListener = new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String response) {
+                        try{
+                            JSONObject jsonObject = new JSONObject(response);
+                            boolean hecho = jsonObject.getBoolean("hecho");
+                            if (hecho){
+                                int id_usuario = jsonObject.getInt("id_usuario");
+                                String nombre = jsonObject.getString("nombre");
+                                String correo = jsonObject.getString("correo");
+                                String contrasena = jsonObject.getString("contrasena");
+
+                                Intent intent = new Intent(MainActivity.this, Modificar.class);
+                                intent.putExtra("id_usuaio", id_usuario);
+                                intent.putExtra("nombre", nombre);
+                                intent.putExtra("correo", correo);
+                                intent.putExtra("contrasena", contrasena);
+                            }else{
+                                AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
+                                builder.setMessage("contraseña o correo incorrectos").setNegativeButton("reintentar", null)
+                                        .create().show();
+                            }
+
+                        }catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                };
+
+                Metodos net = new Metodos(correo, contra, responseListener);
+
+                RequestQueue queue = Volley.newRequestQueue(MainActivity.this);
+                queue.add(net);
             }
         });
 
     }
 
-    private void loginUser(String email, final String password) {
-       final String in_email = email;
-       final String in_password = password;
-        if (TextUtils.isEmpty(email)) {
-            Toast.makeText(MainActivity.this, "No puedes dejar vacío el email", Toast.LENGTH_LONG).show();
-
-        }
-
-        compositeDisposable.add(serviceRetrofit.loginUser(email, password)
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Consumer<String>(){
-
-            @Override
-            public void accept (String response)throws Exception {
-                Toast.makeText(MainActivity.this, response, Toast.LENGTH_LONG).show();
-                if(response == "false"){
-                    Toast.makeText(MainActivity.this, "Datos invalidos", Toast.LENGTH_SHORT).show();
-                }else{
-
-                    JSONObject usuario = new JSONObject(response);
-                    KeyManager keyManager = new KeyManager(MainActivity.this);
-                    keyManager.setKeys(usuario.getString("nombre"),
-                            usuario.getString("apellidoP"),
-                            usuario.getString("apellidoM"),
-                            in_email, password);
-
-                    Intent intent = new Intent(MainActivity.this, Modificar.class);
-                    startActivity(intent);
-                    finish();
-                }
-
-            }
-
-        }));
-
-    }
 
 }
 
