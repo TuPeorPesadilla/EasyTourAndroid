@@ -65,11 +65,11 @@ public class Modificar extends AppCompatActivity{
                             JSONObject jsonObject = new JSONObject(response);
                             boolean hecho = jsonObject.getBoolean("hecho");
                             if (hecho){
-                                Toast.makeText(Modificar.this, "Cuenta modificada", Toast.LENGTH_SHORT).show();
                                 email.setText(newEmail);
                                 confEmail.setText(newEmail);
                                 password.setText(newPassword);
                                 confPassword.setText(newPassword);
+                                Toast.makeText(Modificar.this, "Cuenta modificada", Toast.LENGTH_SHORT).show();
                             }else{
                                 AlertDialog.Builder builder = new AlertDialog.Builder(Modificar.this);
                                 builder.setMessage("contraseña o correo incorrectos").setNegativeButton("reintentar", null)
